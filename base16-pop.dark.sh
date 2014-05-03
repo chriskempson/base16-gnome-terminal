@@ -10,27 +10,27 @@
 PROFILE_KEY="$BASE_KEY/$PROFILE_SLUG"
 
 gset() {
-  local type="$1"; shift
-  local key="$1"; shift
-  local val="$1"; shift
+    local type="$1"; shift
+    local key="$1"; shift
+    local val="$1"; shift
 
-  "$GCONFTOOL" --set --type "$type" "$PROFILE_KEY/$key" -- "$val"
+    "$GCONFTOOL" --set --type "$type" "$PROFILE_KEY/$key" -- "$val"
 }
 
 # Because gconftool doesn't have "append"
 glist_append() {
-  local type="$1"; shift
-  local key="$1"; shift
-  local val="$1"; shift
+    local type="$1"; shift
+    local key="$1"; shift
+    local val="$1"; shift
 
-  local entries="$(
-    {
-      "$GCONFTOOL" --get "$key" | tr -d '[]' | tr , "\n" | fgrep -v "$val"
-      echo "$val"
-    } | head -c-1 | tr "\n" ,
-  )"
+    local entries="$(
+        {
+            "$GCONFTOOL" --get "$key" | tr -d '[]' | tr , "\n" | fgrep -v "$val"
+            echo "$val"
+        } | head -c-1 | tr "\n" ,
+    )"
 
-  "$GCONFTOOL" --set --type list --list-type $type "$key" "[$entries]"
+    "$GCONFTOOL" --set --type list --list-type $type "$key" "[$entries]"
 }
 
 # Append the Base16 profile to the profile list
@@ -41,6 +41,6 @@ gset string palette "#000000000000:#220022002200:#330033003300:#550055005500:#bb
 gset string background_color "#000000000000"
 gset string foreground_color "#dd00dd00dd00"
 gset string bold_color "#dd00dd00dd00"
-gset bool   bold_color_same_as_fg "true"
-gset bool   use_theme_colors "false"
-gset bool   use_theme_background "false"
+gset bool bold_color_same_as_fg "true"
+gset bool use_theme_colors "false"
+gset bool use_theme_background "false"
