@@ -84,7 +84,7 @@ gset() {
 
   "$GCONFTOOL" --set --type "$type" "$PROFILE_KEY/$key" -- "$val"
 }
-
+echo "d"
 # Because gconftool doesn't have "append"
 glist_append() {
   local type="$1"; shift
