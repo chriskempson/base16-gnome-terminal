@@ -67,7 +67,11 @@ if which "$DCONF" > /dev/null 2>&1; then
 		dset use-theme-colors "false"
 		dset use-theme-background "false"
 
-		exit 0
+             unset PROFILE_NAME
+             unset PROFILE_SLUG
+             unset DCONF
+             unset UUIDGEN
+             exit 0
 	fi
 fi
 
@@ -112,3 +116,8 @@ gset string bold_color "#a39e9b"
 gset bool   bold_color_same_as_fg "true"
 gset bool   use_theme_colors "false"
 gset bool   use_theme_background "false"
+
+unset PROFILE_NAME
+unset PROFILE_SLUG
+unset DCONF
+unset UUIDGEN

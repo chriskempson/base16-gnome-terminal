@@ -12,7 +12,7 @@ dset() {
   local val="$1"; shift
 
   if [[ "$type" == "string" ]]; then
-	  val="'$val'"
+      val="'$val'"
   fi
 
   "$DCONF" write "$PROFILE_KEY/$key" "$val"
@@ -35,12 +35,12 @@ dlist_append() {
 
 # Newest versions of gnome-terminal use dconf
 if which "$DCONF" > /dev/null 2>&1; then
-	[[ -z "$BASE_KEY_NEW" ]] && BASE_KEY_NEW=/org/gnome/terminal/legacy/profiles:
+    [[ -z "$BASE_KEY_NEW" ]] && BASE_KEY_NEW=/org/gnome/terminal/legacy/profiles:
 
-	if [[ -n "`$DCONF list $BASE_KEY_NEW/`" ]]; then
-		if which "$UUIDGEN" > /dev/null 2>&1; then
-			PROFILE_SLUG=`uuidgen`
-		fi
+    if [[ -n "`$DCONF list $BASE_KEY_NEW/`" ]]; then
+        if which "$UUIDGEN" > /dev/null 2>&1; then
+            PROFILE_SLUG=`uuidgen`
+        fi
 
     if [[ -n "`$DCONF read $BASE_KEY_NEW/default`" ]]; then
       DEFAULT_SLUG=`$DCONF read $BASE_KEY_NEW/default | tr -d \'`
@@ -48,28 +48,32 @@ if which "$DCONF" > /dev/null 2>&1; then
       DEFAULT_SLUG=`$DCONF list $BASE_KEY_NEW/ | grep '^:' | head -n1 | tr -d :/`
     fi
 
-		DEFAULT_KEY="$BASE_KEY_NEW/:$DEFAULT_SLUG"
-		PROFILE_KEY="$BASE_KEY_NEW/:$PROFILE_SLUG"
+        DEFAULT_KEY="$BASE_KEY_NEW/:$DEFAULT_SLUG"
+        PROFILE_KEY="$BASE_KEY_NEW/:$PROFILE_SLUG"
 
-		# copy existing settings from default profile
-		$DCONF dump "$DEFAULT_KEY/" | $DCONF load "$PROFILE_KEY/"
+        # copy existing settings from default profile
+        $DCONF dump "$DEFAULT_KEY/" | $DCONF load "$PROFILE_KEY/"
 
-		# add new copy to list of profiles
+        # add new copy to list of profiles
     dlist_append $BASE_KEY_NEW/list "$PROFILE_SLUG"
 
-		# update profile values with theme options
-		dset visible-name "'$PROFILE_NAME'"
+        # update profile values with theme options
+        dset visible-name "'$PROFILE_NAME'"
         dset palette "'#2b2b2b:#da4939:#a5c261:#ffc66d:#6d9cbe:#b6b3eb:#519f50:#e6e1dc:#5a647e:#da4939:#a5c261:#ffc66d:#6d9cbe:#b6b3eb:#519f50:#f9f7f3'"
         dset palette "'#f9f7f3:#da4939:#a5c261:#ffc66d:#6d9cbe:#b6b3eb:#519f50:#e6e1dc:#5a647e:#da4939:#a5c261:#ffc66d:#6d9cbe:#b6b3eb:#519f50:#2b2b2b'"
-		dset background-color "'#f9f7f3'"
-		dset foreground-color "'#3a4055'"
-		dset bold-color "'#3a4055'"
-		dset bold-color-same-as-fg "true"
-		dset use-theme-colors "false"
-		dset use-theme-background "false"
+        dset background-color "'#f9f7f3'"
+        dset foreground-color "'#3a4055'"
+        dset bold-color "'#3a4055'"
+        dset bold-color-same-as-fg "true"
+        dset use-theme-colors "false"
+        dset use-theme-background "false"
 
-		exit 0
-	fi
+             unset PROFILE_NAME
+             unset PROFILE_SLUG
+             unset DCONF
+             unset UUIDGEN
+             exit 0
+    fi
 fi
 
 # Fallback for Gnome 2 and early Gnome 3
@@ -113,3 +117,8 @@ gset string bold_color "#3a4055"
 gset bool   bold_color_same_as_fg "true"
 gset bool   use_theme_colors "false"
 gset bool   use_theme_background "false"
+
+unset PROFILE_NAME
+unset PROFILE_SLUG
+unset DCONF
+unset UUIDGEN

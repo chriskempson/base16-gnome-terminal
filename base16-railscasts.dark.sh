@@ -67,6 +67,11 @@ if which "$DCONF" > /dev/null 2>&1; then
 		dset use-theme-colors "false"
 		dset use-theme-background "false"
 
+             unset PROFILE_NAME
+             unset PROFILE_SLUG
+             unset DCONF
+             unset UUIDGEN
+
 		exit 0
 	fi
 fi
@@ -84,7 +89,7 @@ gset() {
 
   "$GCONFTOOL" --set --type "$type" "$PROFILE_KEY/$key" -- "$val"
 }
-echo "d"
+
 # Because gconftool doesn't have "append"
 glist_append() {
   local type="$1"; shift
@@ -112,3 +117,9 @@ gset string bold_color "#e6e1dc"
 gset bool   bold_color_same_as_fg "true"
 gset bool   use_theme_colors "false"
 gset bool   use_theme_background "false"
+
+unset PROFILE_NAME
+unset PROFILE_SLUG
+unset DCONF
+unset UUIDGEN
+
