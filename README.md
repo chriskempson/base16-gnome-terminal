@@ -1,4 +1,9 @@
-# base16-gnome-terminal
+# Deprecated
+Please use: https://github.com/aaron-williamson/base16-gnome-terminal
+
+<hr>
+
+# Base16 Gnome Terminal
 
 [Base16](https://github.com/chriskempson/base16) for Gnome Terminal should be used **only** if you don't wish to use [Base16 Shell](https://github.com/chriskempson/base16-shell) which is the preffered way of setting terminal colors.
 
